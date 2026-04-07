@@ -26,9 +26,9 @@ All testing was conducted on authorized virtual machines in a controlled environ
 
 
 <h2>Attack Simulations</h2>
-TCP SYN FLood (Layer 4)
+<b>TCP SYN FLood (Layer 4)</b>
 
-Command: hping3 -S -p 80 ZYWIN01 --faster
+Command: hping3 -S 10 -p 80 ZYWIN01 --faster
 
 A high volume of SYN packets was sent without completing the handshake, creating half open connections.
 <br/>
@@ -39,12 +39,14 @@ A high volume of SYN packets was sent without completing the handshake, creating
 - <b>Connection resources became strained</b>
 
 <p align="center">
-<img src="https://i.imgur.com/6luSwHK.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+<img src="https://i.imgur.com/gXfi9gA.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
 <br />
 <p align="left">
-ICMP Flood (Layer 3) 
+<h2> </h2>
 
- Command: ping -f -s 65500 ZYWIN01
+<b>ICMP Flood (Layer 3)</b> 
+
+Command: ping -f -s 65500 ZYWIN01
  
 Continuous ICMP traffic was used to consume network bandwith.
 <br/>
@@ -55,13 +57,16 @@ Continuous ICMP traffic was used to consume network bandwith.
 - <b>Connection resources became strained</b>
 
 <p align="center">
-<img src="https://i.imgur.com/6luSwHK.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+<img src="https://i.imgur.com/yXLdfOv.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
 <br />
 <p align="left">
-UDP Flood (Layer 4) 
+<h2> </h2>
 
- Command: hping3 -flood --udp -d 60000 ZYWIN01
- 
+<b>UDP Flood (Layer 4)</b> 
+
+Command: hping3 -flood --udp -d 60000 ZYWIN01 
+
+Continuous ICMP traffic was used to consume network bandwith.
 Large volumes of UDP packets were sent to trigger system responses.
 <br/>
  <h2>Observation </h2>
@@ -71,10 +76,12 @@ Large volumes of UDP packets were sent to trigger system responses.
 - <b>Increased bandwidth and CPU usage</b>
 
 <p align="center">
-<img src="https://i.imgur.com/6luSwHK.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+<img src="https://i.imgur.com/9yqymvl.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
 <br />
  <p align="left">
-Sloworis Attack (Layer 7) 
+<h2> </h2>
+
+<b>Sloworis Attack (Layer 7)</b>
 
 Command: slowloris -s 500 --sleeptime 5 ZYWIN01
 
@@ -87,10 +94,13 @@ Multiple incomplete HTTP request were sent to exhause server connections.
 - <b>Web server became unresponsive</b>
 
 <p align="center">
-<img src="https://i.imgur.com/6luSwHK.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+<img src="https://i.imgur.com/3WLEvK5.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
 <br />
  <p align="left">
-System Impact
+<h2> </h2>
+
+<b>System Impact</b>
+
 System performance was monitored during the attacks.
 <br/>
  <h2>Observation </h2>
@@ -99,7 +109,7 @@ System performance was monitored during the attacks.
 - <b>Resource exhaustion depending on attack type</b>
 
 <p align="center">
-<img src="https://i.imgur.com/6luSwHK.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+<img src="https://i.imgur.com/uiGQNDy.png="80%" width="80%" alt="Disk Sanitization Steps"/>
 <br />
 <h2> Comparative Analysis </h2>
 
