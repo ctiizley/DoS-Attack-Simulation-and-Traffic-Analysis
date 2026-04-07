@@ -27,11 +27,12 @@ All testing was conducted on authorized virtual machines in a controlled environ
 
 <h2>Attack Simulations</h2>
 TCP SYN FLood (Layer 4)
-<p align="center">
-A high volume of SYN packets was sent without completing the handshake, creating half-open connections.
+
+Command: hping3 -S -p 80 ZYWIN01 --faster
+
+A high volume of SYN packets was sent without completing the handshake, creating half open connections.
 <br/>
-<img src="https://i.imgur.com/6luSwHK.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
-<h2>Observation </h2>
+ <h2>Observation </h2>
 
 - <b>Large number of SYN packets visible in Wireshark</b>
 - <b>Server responded with SYN-ACK packets</b>
@@ -41,57 +42,87 @@ A high volume of SYN packets was sent without completing the handshake, creating
 <img src="https://i.imgur.com/6luSwHK.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
 <br />
 <p align="left">
- ICMP Flood (Layer 3) <br/>
-<p align="center">
-  Continuous ICMP traffic was used to consume network bandwith.
+ICMP Flood (Layer 3) 
+
+ Command: ping -f -s 65500 ZYWIN01
+ 
+Continuous ICMP traffic was used to consume network bandwith.
 <br/>
-<img src="https://i.imgur.com/tV9KQIw.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+ <h2>Observation </h2>
+
+- <b>Large number of SYN packets visible in Wireshark</b>
+- <b>Server responded with SYN-ACK packets</b>
+- <b>Connection resources became strained</b>
+
+<p align="center">
+<img src="https://i.imgur.com/6luSwHK.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
 <br />
 <p align="left">
- Phase 3: Block Telnet (Port 23) <br/>
-<p align="center">
-Prevents plaintext credential exposure
+UDP Flood (Layer 4) 
+
+ Command: hping3 -flood --udp -d 60000 ZYWIN01
+ 
+Large volumes of UDP packets were sent to trigger system responses.
 <br/>
-<img src="https://i.imgur.com/CqbdhEn.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+ <h2>Observation </h2>
+
+- <b>High UDP traffic in Wireshark</b>
+- <b>ICMP Destination Unreachable responses</b>
+- <b>Increased bandwidth and CPU usage</b>
+
+<p align="center">
+<img src="https://i.imgur.com/6luSwHK.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
 <br />
-<p align="left">
- Phase 4: Block SMB (Port 445) <br/>
+ <p align="left">
+Sloworis Attack (Layer 7) 
+
+Command: slowloris -s 500 --sleeptime 5 ZYWIN01
+
+Multiple incomplete HTTP request were sent to exhause server connections.
+<br/>
+ <h2>Observation </h2>
+
+- <b>Incomplete HTTP headers observed</b>
+- <b>Low bandwidth usage</b>
+- <b>Web server became unresponsive</b>
+
 <p align="center">
-Estimated the operating system using TCP/IP fingerprinting based on network response behavior.
+<img src="https://i.imgur.com/6luSwHK.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+<br />
+ <p align="left">
+System Impact
+System performance was monitored during the attacks.
 <br/>
-<img src="https://i.imgur.com/BkUlKHD.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
-  <br />
-<p align="left">
- Phase 4: Block TFTP (Port 69)
-<br/>
+ <h2>Observation </h2>
+
+- <b>Increased CPU and network utilization</b>
+- <b>Resource exhaustion depending on attack type</b>
+
 <p align="center">
-Prevents unauthorized file transfers (no authentication/encryption)
-<br/>
-<img src="https://i.imgur.com/0i12zQ7.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
-  <br />
-<p align="center">
-SMTP Configuration Restricted unencrypted SMTP and enforced secure email transmission
-<br/>
-<img src="https://i.imgur.com/fQK14Av.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
-</p>
+<img src="https://i.imgur.com/6luSwHK.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+<br />
+<h2> Comparative Analysis </h2>
 
-<h2> Security Improvements </h2>
+- <b>TCP SYN Flood → targets connection state (Layer 4)</b>
+- <b>ICMP Flood → targets bandwidth (Layer 3)</b>
+- <b>UDP Flood → targets bandwidth and CPU (Layer 4)</b>
+- <b>Slowloris → targets application resources (Layer 7)</b>
 
-- <b>Reduced attack surface</b>
-- <b>Replaced insecure protocols with secure alternatives</b>
-- <b>Implemented outbound filtering</b>
-- <b>Maintained required services</b>
+<h2> Key Takeaways </h2>
 
-<h2> Skills Demonstrated </h2>
-
-- <b>Firewall configuration</b>
-- <b>Traffic filtering (inbound/outbound)</b>
-- <b>Service enumeration</b>
-- <b>Port-based security</b>
-- <b>Risk-based decision making</b>
+- <b>Different DoS attacks impact different system resources</b>
+- <b>Not all attacks require high bandwidth to be effective</b>
+- <b>Packet analysis tools help identify attack behavior</b>
+- <b>Monitoring tools are critical for detecting abnormal activity</b>
 
 
-<h2>Ethical Statement</h2>
+<h2>Skills Demonstrated</h2>
+
+- <b>Network traffic analysis (Wireshark)</b>
+- <b>Packet crafting and flood simulation</b>
+- <b>System performance monitoring</b>
+- <b>Differentiating attack types</b>
+
 All activities were conducted in an isolated lab environment on authorized systems for educational and defensive security purposes only.
 <br />
 <!--
